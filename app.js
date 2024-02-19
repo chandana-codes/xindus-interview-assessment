@@ -1,35 +1,14 @@
 const express = require("express");
-const session = require("express-session");
-const registerRoute = require("./routes/register");
-const loginRoute = require("./routes/login");
-const logoutRoute = require("./routes/logout");
-const crypto = require("crypto");
+const bodyParser = require("body-parser");
+const authRoutes = require("./routes/authRoutes");
+const wishlistRoutes = require("./routes/wishlistRoutes");
 
 const app = express();
 
-app.use(express.json());
+app.use(bodyParser.json());
 
-// Generate a random string of 64 characters
-const generateRandomString = () => {
-  return crypto.randomBytes(32).toString("hex");
-};
+app.use("/api/auth", authRoutes);
+app.use("/api", wishlistRoutes);
 
-const secretKey = generateRandomString();
-// console.log("Generated secret key:", secretKey);
-
-// Configure express-session middleware
-app.use(
-  session({
-    secret: secretKey,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false },
-  })
-);
-
-// Routes
-app.use("/register", registerRoute);
-app.use("/login", loginRoute);
-app.use("/logout", logoutRoute);
-
-module.exports = app;
+const PORT = process.env.PORT || 3040;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
