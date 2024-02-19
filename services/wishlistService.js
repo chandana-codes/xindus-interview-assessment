@@ -2,13 +2,25 @@ const db = require("../entities/database");
 
 const wishlistService = {};
 
-wishlistService.getWishlist = async (userId) => {
+wishlistService.getWishlist = async (userId, token) => {
   return new Promise((resolve, reject) => {
-    db.all("SELECT * FROM wishlist WHERE userId = ?", [userId], (err, rows) => {
+    jwt.verify(token, "secret_key", (err, decoded) => {
       if (err) {
         reject(err);
       }
-      resolve(rows);
+      if (decoded.id !== userId) {
+        reject(new Error("Unauthorized access"));
+      }
+      db.all(
+        "SELECT * FROM wishlist WHERE userId = ?",
+        [userId],
+        (err, rows) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(rows);
+        }
+      );
     });
   });
 };
