@@ -63,8 +63,6 @@ async () => {
         expect(res.status).to.equal(409);
       });
     });
-
-    // Add more test cases for other routes or scenarios as needed
   });
 
   module.exports = require("./authController.test.esm.js");
