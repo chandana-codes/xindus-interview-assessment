@@ -1,6 +1,6 @@
 const wishlistService = require("../services/wishlistService");
 
-const wishlistController = [];
+const wishlistController = {};
 
 wishlistController.getWishlist = async (req, res) => {
   try {

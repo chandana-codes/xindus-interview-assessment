@@ -5,7 +5,7 @@ const app = require("../app");
 describe("Auth APIs", () => {
   it("POST /register should return 200 and give session token as a response", (done) => {
     request(app)
-      .post("/register")
+      .post("/api/auth/signup")
       .send({
         username: faker.internet.userName(),
         password: "testPassword001",
@@ -20,7 +20,7 @@ describe("Auth APIs", () => {
 
   it("POST /login should return 200 and give session token as a response", (done) => {
     request(app)
-      .post("/login")
+      .post("/api/auth/login")
       .send({ username: "aneshcodes001@gmail.com", password: "Anesh123" })
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
@@ -33,7 +33,7 @@ describe("Auth APIs", () => {
 
   it("POST /logout should return 200 and a success message", (done) => {
     request(app)
-      .post("/logout")
+      .post("/api/auth/logout")
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
       .expect((res) => {
@@ -44,7 +44,7 @@ describe("Auth APIs", () => {
 
   it("POST /signup should return 200 and give session token as a response", (done) => {
     request(app)
-      .post("/signup")
+      .post("/api/auth/signup")
       .send({
         username: faker.internet.userName(),
         password: "testPassword001",
@@ -59,7 +59,7 @@ describe("Auth APIs", () => {
 
   it("GET /wishlist should return 200 and an array of wishlist items", (done) => {
     request(app)
-      .get("/wishlist")
+      .get("/api/wishlist")
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
       .expect((err, res) => {
@@ -72,7 +72,7 @@ describe("Auth APIs", () => {
 
   it("POST /wishlist should return 201 and the created wishlist item", (done) => {
     request(app)
-      .post("/wishlist")
+      .post("/api/wishlist")
       .send({
         item: "New wishlist item",
       })
